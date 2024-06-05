@@ -1,4 +1,4 @@
-# ElasticParser V2
+# ElasticParser
 
 A Parser for ElasticSearch Front Request
 
@@ -9,7 +9,6 @@ A Parser for ElasticSearch Front Request
     - [Query Part](#query-parts-parameters)
     - [Rules](#rules)
 - [End Points](#end-points)
-- [ElasticResultParser](#elasticresultparser)
 - [Annexes](#annexes)
     - [Researchs](#researchs)
     - [RoadMap](#roadmap)
@@ -30,8 +29,6 @@ A simple exemple of a Front Request :
 
 ```json
 {
-  "debug" : false,
-  "verbose" : false,
   "params" : {
     "usedFields": [
     ]
@@ -42,7 +39,7 @@ A simple exemple of a Front Request :
         "field": null,
         "operator": null,
         "values": [
-          "never gonna give yo*"
+          "never gonna give yo"
         ]
       }
     ]
@@ -53,8 +50,6 @@ A simple exemple of a Front Request :
 So, as you can see, the request have two distinct parts :
 - The Parameters Section, where you have all of the Elastic Search's Params ( Ex. Max size of the result )
 - The Query Section, where you have all of the Front User's Search params ( Ex. The simple query string, the filtered fields, ... )
-
-With those two parts, the values "debug" and "verbose" can be used for debugging and have directy the ES result, without the ElasticResultParser result.
 
 ### Params Part's Parameters
 
@@ -86,11 +81,11 @@ Each rule adds a limitation to the search, and adding more rules in the query li
 - Field Search
 - Operator Search
 
-In a `rule` object, if you only have a single value in the `values` array, the parser is going to use the value as the main search. You can use wildcard such as n-carac (*) and single-cara (?) wildcards. If you dont use them, then you'll only find the exact search.
+In a `rule` object, if you only have a single value in the `values` array, then the parser is going to use the value as the main search, adding a wildcard at the end (*)
 ```json
 rules : [
     {
-        "values": ["antropomor*"]
+        "values": ["antropomor"]
     }
 ]
 
@@ -98,7 +93,7 @@ rules : [
 ```
 **Only ONE rule such as this is allowed.** Only one search at a time. ( for my future self : Don't be dumb :D )
 
-If you have a value, but also a `field`, then the search will be only on the selected field.
+If you don't only have a value, but also a `field`, then the search will be only on the selected field. Be careful, this search isn't using a wildcard, so it would be searching only for the exact given value.
 ```json
 rules : [
     {
@@ -107,11 +102,11 @@ rules : [
     }
 ]
 
--> Searching "+331234567890" ONLY in all "phone" fields
+-> Searching "+331234567890" ONLY in the "phone" field
 ```
-In addition to that, you can make the `isKeyword` boolean as `true` if you want an Unanalyzed search (Case and Accent Sensitive + Space Sensitive + HTML Sensitive + Ponctuation Sensitive).
+In addition to that, you can make the `isKeyword` boolean as `true` if you want an Unanalyzed search (Case and Accent Sensitive + Space Sensitive + HTML Sensitive + Ponctuation Sensitive). The field need to have a field.keyword field with type `keyword` to work though.
 
-If you want to have some operations done between two values (OR / AND / XOR / NOT), then you just need to add the `operation` option.
+If you want to have some operations done between two values (OR / AND / XOR / NOT), then you just need to add the `operation` option. Be carful, this search also isn't using wildcard (*), so it is only searching for the exact given value.
 ```json
 rules : [
     {
@@ -124,7 +119,7 @@ rules : [
     }
 ]
 
--> Searching in all "societyType" fields for "SARL" OR "SSII"
+-> Searching in the field "societyType" for "SARL" OR "SSII"
 ```
 
 Of course, the objective of the rules mechanism is to be able to make multiple restrictions in a single search. You can add as many rules as you want.
@@ -133,53 +128,17 @@ Of course, the objective of the rules mechanism is to be able to make multiple r
 
 I dont think i need to explain the whole system of ES query, but, depending of what type of rule you add, the Parser is going to add different type of parts in the ES query :
 - A Simple Search is adding a `must -> query_string : VALUE` part. [[Query String Docs](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/query-dsl-query-string-query.html)]
-- A Field Search is adding a `must -> query_string : FIELD + VALUE` part [[Query String Docs](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/query-dsl-query-string-query.html)]
+- A Field Search is adding a `must -> term -> FIELD : VALUE` part [[Term Docs](https://www.elastic.co/guide/en/elasticsearch/reference/8.11/query-dsl-term-query.html)]
 - An Operator Search is adding :
 
-|Operator |ES Query Part                                                                 |
-|:-------:|:----------------------------------------------------------------------------:|
-|AND      |`must -> {query_string -> FIELD : VAL1}, {query_string -> FIELD : VAL2}]`     |
-|NOT      |`must_not -> [{query_string -> FIELD : VAL1}, {query_string -> FIELD : VAL2}]`|
-|XOR      |`should -> {query_string -> FIELD : VAL1}, {query_string -> FIELD : VAL2}]`   |
-|OR       |`should -> {query_string -> FIELD : VAL1}, {query_string -> FIELD : VAL2}]`   |
+|Operator |ES Query Part                                                 |
+|:-------:|:------------------------------------------------------------:|
+|AND      |`must -> {term -> FIELD : VAL1}, {term -> FIELD : VAL2}]`     |
+|NOT      |`must_not -> [{term -> FIELD : VAL1}, {term -> FIELD : VAL2}]`|
+|XOR      |`should -> {term -> FIELD : VAL1}, {term -> FIELD : VAL2}]`   |
+|OR       |`should -> {term -> FIELD : VAL1}, {term -> FIELD : VAL2}]`   |
 
 As you can see, for the XOR and the OR Operator, its exacly the same, but the XOR Operator add another option : `minimum_should_match = -1`. That means that the result can only have one of the two values as, not both in the field.
-
-With the add of Nested Highlights, the query is far more complex than the first version. The query search for each part of the Nested Result : sites, sites.contacts, sites.contacts.phones, sites.contacts.emails, contacts, contacts.phones, contacts.emails. You can find an exemple down in the annexe's part.
-
-## ElasticResultParser
-
-When the result came back from ES, we used another parser to serialize all datas to the same architecture. Each field in the result is like this :
-
-```json
-[name_of_the_field] : {
-  "content" : "sas les ambroisies",
-  "isHighlighted" : true,
-  "highlights" : {
-    "sas" : 1,
-    "ambroisies" : 1
-  },
-}
-```
-
-The type of `content` can be of type string, interger of float, depending of the value inside. If a field is of the type Array, the structure became an array :
-
-```json
-[name_of_the_field] : [
-  {
-    "content" : "0987654321",
-    "isHighlighted" : false,
-    "highlights" : null,
-  }
-  {
-    "content" : "0123456789",
-    "isHighlighted" : true,
-    "highlights" : {
-      "0123456789" : 1
-    },
-  }
-]
-```
 
 ## Annexes
 ### Researchs
@@ -205,10 +164,10 @@ Basic Explications :
 - Keyword [DONE]
 - Simple Search [DONE]
 - Field Search [DONE]
-- Operator Search [DONE]
-- Recursivity (Operator inside a value of an operator) [ON GOING]
+- Operator Search [ON GOING] -> Need to use the Highlight Dico to properly do Term Field's search
+- Recursivity (Operator inside a value of an operator) [DONE]
 - Highlight [DONE]
-- Recursive Highlight (Nested Highlights) [DONE]
+- Recursive Highlight (Nested Highlights) [TO DO]
 
 ### Save ES Query for tests
 
@@ -499,8 +458,6 @@ Simple Search
 - "SAS" / "sas"
 - "alzu" / "alzuyeta" / "AlZuYetA"
 - "11330" / "(11330)"
-- "banks" / "canejj"
-- "0442540689" Tel / "13770" Zip
 
 Error Search
 - "   " / "***" -> All result
