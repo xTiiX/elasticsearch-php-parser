@@ -1,0 +1,1 @@
+{"index":"test","size":20,"body":{"query":{"bool":{"must":[{"query_string":{"query":"rh@nomotech.com*","fields":[]},"0":{"terms":{"ANDname":"z*","email":"test2"}}}],"should":[[{"terms":{"ORname":"a*","XORname":"a*"}},{"terms":{"ORname":"z*","XORname":"z*"}}]],"must_not":[[{"terms":{"NOTname":"a*"}},{"terms":{"NOTname":"z*"}}]],"minimum_should_match":-1}}}}

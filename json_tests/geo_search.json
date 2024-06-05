@@ -1,0 +1,26 @@
+{
+  "params" : {
+    "from" : 0,
+    "size" : 20,
+    "usedFields": [
+    ]
+  },
+  "query": {
+    "geo": {
+      "longitude": -0.194995,
+      "latitude": 0.1124883,
+      "maxDistanceKm": 20,
+      "order": "asc"
+    },
+    "rules": [
+      {
+        "field": "type",
+        "isKeyword": false,
+        "operator": null,
+        "values": [
+          "site"
+        ]
+      }
+    ]
+  }
+}

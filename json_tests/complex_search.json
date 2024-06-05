@@ -1,0 +1,55 @@
+{
+  "params" : {
+    "from" : 0,
+    "size" : 20,
+    "usedFields": [
+    ]
+  },
+  "query": {
+    "rules": [
+      {
+        "field": null,
+        "operator": null,
+        "values": [
+          "rh@nomotech.com"
+        ]
+      },{
+        "field": "ANDname",
+        "operator": "AND",
+        "values": [
+          "a*",
+          "z*"
+        ]
+      },{
+        "field": "ORname",
+        "operator": "OR",
+        "values": [
+          "a*",
+          "z*"
+        ]
+      },{
+        "field": "NOTname",
+        "operator": "NOT",
+        "values": [
+          "a*",
+          "z*"
+        ]
+      },{
+        "field": "XORname",
+        "operator": "XOR",
+        "values": [
+          "a*",
+          "z*"
+        ]
+      },
+      {
+        "field": "email",
+        "operator": null,
+        "values": [
+          "test",
+          "test2"
+        ]
+      }
+    ]
+  }
+}

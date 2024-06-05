@@ -1,0 +1,17 @@
+{
+  "params" : {
+    "usedFields": [
+    ]
+  },
+  "query": {
+    "rules": [
+      {
+        "field": null,
+        "operator": null,
+        "values": [
+          "rh@nomotech.com"
+        ]
+      }
+    ]
+  }
+}

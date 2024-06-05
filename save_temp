@@ -1,0 +1,409 @@
+XOR A - B : 4979
+OR A - B : 4979
+AND A - B : 219
+MUST B : 4971
+MUST A : 227
+
+{
+    "index": "X",
+    "size": 20,
+    "body": {
+        "highlight": {
+            "pre_tags": [
+                ""
+            ],
+            "post_tags": [
+                ""
+            ],
+            "order": "score",
+            "fields": {
+                "*": {
+                    "fragment_size": 1,
+                    "number_of_fragments": 3,
+                    "fragmenter": "span"
+                }
+            }
+        },
+        "query": {
+            "bool": {
+                "should": [
+                    {
+                        "bool": {
+                            "should": [
+                                {
+                                    "query_string": {
+                                        "fields": [
+                                            "*"
+                                        ],
+                                        "query": "A"
+                                    }
+                                },
+                                {
+                                    "query_string": {
+                                        "fields": [
+                                            "*"
+                                        ],
+                                        "query": "B"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "bool": {
+                            "should": [
+                                {
+                                    "nested": {
+                                        "query": [
+                                            {
+                                                "bool": {
+                                                    "should": [
+                                                        {
+                                                            "query_string": {
+                                                                "fields": [
+                                                                    "*"
+                                                                ],
+                                                                "query": "A"
+                                                            }
+                                                        },
+                                                        {
+                                                            "query_string": {
+                                                                "fields": [
+                                                                    "*"
+                                                                ],
+                                                                "query": "B"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "nested": {
+                                                    "query": {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "bool": {
+                                                                        "should": [
+                                                                            {
+                                                                                "query_string": {
+                                                                                    "fields": [
+                                                                                        "*"
+                                                                                    ],
+                                                                                    "query": "A"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "query_string": {
+                                                                                    "fields": [
+                                                                                        "*"
+                                                                                    ],
+                                                                                    "query": "B"
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "bool": {
+                                                                        "should": [
+                                                                            {
+                                                                                "nested": {
+                                                                                    "path": "sites.contacts.phones",
+                                                                                    "query": {
+                                                                                        "bool": {
+                                                                                            "should": [
+                                                                                                {
+                                                                                                    "query_string": {
+                                                                                                        "fields": [
+                                                                                                            "*"
+                                                                                                        ],
+                                                                                                        "query": "A"
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "query_string": {
+                                                                                                        "fields": [
+                                                                                                            "*"
+                                                                                                        ],
+                                                                                                        "query": "B"
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    "inner_hits": {
+                                                                                        "highlight": {
+                                                                                            "pre_tags": [
+                                                                                                ""
+                                                                                            ],
+                                                                                            "post_tags": [
+                                                                                                ""
+                                                                                            ],
+                                                                                            "order": "score",
+                                                                                            "fields": {
+                                                                                                "*": {
+                                                                                                    "fragment_size": 1,
+                                                                                                    "number_of_fragments": 3,
+                                                                                                    "fragmenter": "span"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "nested": {
+                                                                                    "path": "sites.contacts.emails",
+                                                                                    "query": {
+                                                                                        "bool": {
+                                                                                            "should": [
+                                                                                                {
+                                                                                                    "query_string": {
+                                                                                                        "fields": [
+                                                                                                            "*"
+                                                                                                        ],
+                                                                                                        "query": "A"
+                                                                                                    }
+                                                                                                },
+                                                                                                {
+                                                                                                    "query_string": {
+                                                                                                        "fields": [
+                                                                                                            "*"
+                                                                                                        ],
+                                                                                                        "query": "B"
+                                                                                                    }
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    "inner_hits": {
+                                                                                        "highlight": {
+                                                                                            "pre_tags": [
+                                                                                                ""
+                                                                                            ],
+                                                                                            "post_tags": [
+                                                                                                ""
+                                                                                            ],
+                                                                                            "order": "score",
+                                                                                            "fields": {
+                                                                                                "*": {
+                                                                                                    "fragment_size": 1,
+                                                                                                    "number_of_fragments": 3,
+                                                                                                    "fragmenter": "span"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "minimum_should_match": -1
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "minimum_should_match": -1
+                                                        }
+                                                    },
+                                                    "path": "sites.contacts",
+                                                    "inner_hits": {
+                                                        "highlight": {
+                                                            "pre_tags": [
+                                                                ""
+                                                            ],
+                                                            "post_tags": [
+                                                                ""
+                                                            ],
+                                                            "order": "score",
+                                                            "fields": {
+                                                                "*": {
+                                                                    "fragment_size": 1,
+                                                                    "number_of_fragments": 3,
+                                                                    "fragmenter": "span"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ],
+                                        "path": "sites",
+                                        "inner_hits": {
+                                            "highlight": {
+                                                "pre_tags": [
+                                                    ""
+                                                ],
+                                                "post_tags": [
+                                                    ""
+                                                ],
+                                                "order": "score",
+                                                "fields": {
+                                                    "*": {
+                                                        "fragment_size": 1,
+                                                        "number_of_fragments": 3,
+                                                        "fragmenter": "span"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "nested": {
+                                        "query": {
+                                            "bool": {
+                                                "should": [
+                                                    {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "query_string": {
+                                                                        "fields": [
+                                                                            "*"
+                                                                        ],
+                                                                        "query": "A"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "query_string": {
+                                                                        "fields": [
+                                                                            "*"
+                                                                        ],
+                                                                        "query": "B"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "bool": {
+                                                            "should": [
+                                                                {
+                                                                    "nested": {
+                                                                        "path": "sites.contacts.phones",
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "should": [
+                                                                                    {
+                                                                                        "query_string": {
+                                                                                            "fields": [
+                                                                                                "*"
+                                                                                            ],
+                                                                                            "query": "A"
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "query_string": {
+                                                                                            "fields": [
+                                                                                                "*"
+                                                                                            ],
+                                                                                            "query": "B"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "inner_hits": {
+                                                                            "highlight": {
+                                                                                "pre_tags": [
+                                                                                    ""
+                                                                                ],
+                                                                                "post_tags": [
+                                                                                    ""
+                                                                                ],
+                                                                                "order": "score",
+                                                                                "fields": {
+                                                                                    "*": {
+                                                                                        "fragment_size": 1,
+                                                                                        "number_of_fragments": 3,
+                                                                                        "fragmenter": "span"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "nested": {
+                                                                        "path": "sites.contacts.emails",
+                                                                        "query": {
+                                                                            "bool": {
+                                                                                "should": [
+                                                                                    {
+                                                                                        "query_string": {
+                                                                                            "fields": [
+                                                                                                "*"
+                                                                                            ],
+                                                                                            "query": "A"
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "query_string": {
+                                                                                            "fields": [
+                                                                                                "*"
+                                                                                            ],
+                                                                                            "query": "B"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "inner_hits": {
+                                                                            "highlight": {
+                                                                                "pre_tags": [
+                                                                                    ""
+                                                                                ],
+                                                                                "post_tags": [
+                                                                                    ""
+                                                                                ],
+                                                                                "order": "score",
+                                                                                "fields": {
+                                                                                    "*": {
+                                                                                        "fragment_size": 1,
+                                                                                        "number_of_fragments": 3,
+                                                                                        "fragmenter": "span"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "minimum_should_match": -1
+                                                        }
+                                                    }
+                                                ],
+                                                "minimum_should_match": -1
+                                            }
+                                        },
+                                        "path": "contacts",
+                                        "inner_hits": {
+                                            "highlight": {
+                                                "pre_tags": [
+                                                    ""
+                                                ],
+                                                "post_tags": [
+                                                    ""
+                                                ],
+                                                "order": "score",
+                                                "fields": {
+                                                    "*": {
+                                                        "fragment_size": 1,
+                                                        "number_of_fragments": 3,
+                                                        "fragmenter": "span"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            "minimum_should_match": -1
+                        }
+                    }
+                ],
+                "minimum_should_match": -1
+            }
+        }
+    }
+}

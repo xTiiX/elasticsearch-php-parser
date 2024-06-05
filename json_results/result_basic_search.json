@@ -1,0 +1,1 @@
+{"index":"test","size":20,"body":{"query":{"bool":{"must":[{"query_string":{"query":"rh@nomotech.com*","fields":[]}}]}}}}

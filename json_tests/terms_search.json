@@ -1,0 +1,22 @@
+{
+  "params" : {
+  },
+  "query": {
+    "rules": [
+      {
+        "field": "type",
+        "operator": null,
+        "values": [
+          "site"
+        ]
+      },{
+        "field": "email",
+        "operator": "AND",
+        "values": [
+          "@nomotech.com",
+          "@voip.com"
+        ]
+      }
+    ]
+  }
+}

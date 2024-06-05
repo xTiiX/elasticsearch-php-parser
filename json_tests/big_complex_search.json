@@ -1,0 +1,49 @@
+{
+  "params" : {
+    "from" : 0,
+    "size" : 20,
+    "usedFields": [
+      "name",
+      "email"
+    ]
+  },
+  "query": {
+    "rules": [
+      {
+        "field": "name",
+        "operator": null,
+        "values": [
+          "rh@nomotech.com"
+        ]
+      },{
+        "field": "name",
+        "operator": "AND",
+        "values": [
+          "a*",
+          "z*"
+        ]
+      },{
+        "field": "email",
+        "operator": "XOR",
+        "values": [
+          "@nomotech.com",
+          "@voip.com"
+        ]
+      },{
+        "field": "email",
+        "operator": "AND",
+        "values": [
+          "@nomotech.com",
+          {
+            "field": "name",
+            "operator": "OR",
+            "values": [
+              "a*",
+              "z*"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

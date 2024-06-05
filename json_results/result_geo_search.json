@@ -1,0 +1,1 @@
+{"index":"test","size":20,"body":{"query":{"bool":{"must":[[{"terms":{"type":"site"}}]]}},"sort":[{"_geo_distance":{"pin.location":[-0.194995,0.1124883],"order":"asc","unit":"km","mode":"min","distance_type":"arc","ignore_unmapped":true}}]}}
