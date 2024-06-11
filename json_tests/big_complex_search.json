@@ -13,7 +13,7 @@
         "field": "name",
         "operator": null,
         "values": [
-          "rh@nomotech.com"
+          "rh@test.com"
         ]
       },{
         "field": "name",
@@ -26,14 +26,14 @@
         "field": "email",
         "operator": "XOR",
         "values": [
-          "@nomotech.com",
-          "@voip.com"
+          "@test.com",
+          "@test2.com"
         ]
       },{
         "field": "email",
         "operator": "AND",
         "values": [
-          "@nomotech.com",
+          "@test.com",
           {
             "field": "name",
             "operator": "OR",

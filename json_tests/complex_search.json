@@ -11,7 +11,7 @@
         "field": null,
         "operator": null,
         "values": [
-          "rh@nomotech.com"
+          "rh@test.com"
         ]
       },{
         "field": "ANDname",

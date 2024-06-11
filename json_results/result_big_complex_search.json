@@ -5,8 +5,8 @@
         [
           {
             "terms":{
-              "name":"rh@nomotech.com",
-              "email":"@nomotech.com"
+              "name":"rh@test.com",
+              "email":"@test.com"
             }
           },
           {
@@ -39,4 +39,4 @@
           }
         ]
       ],
-      "should":[[{"terms":{"email":"@nomotech.com"}},{"terms":{"email":"@voip.com"}}]],"minimum_should_match":-1}}}}
+      "should":[[{"terms":{"email":"@test.com"}},{"terms":{"email":"@test2.com"}}]],"minimum_should_match":-1}}}}

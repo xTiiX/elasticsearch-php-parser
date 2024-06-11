@@ -229,9 +229,9 @@ Simple Search
 - "a"
 - "rh"
 - "SAS" / "sas"
-- "alzu" / "alzuyeta" / "AlZuYetA"
+- "alzu" / "alzuy" / "AlZuY"
 - "11330" / "(11330)"
-- "banks" / "canejj"
+- "banks" / "cane"
 - "0442540689" Tel / "13770" Zip
 
 Error Search

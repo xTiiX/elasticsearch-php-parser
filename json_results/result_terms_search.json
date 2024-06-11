@@ -1,1 +1,1 @@
-{"index":"test","size":20,"body":{"query":{"bool":{"must":[[{"terms":{"type":"site","email":"@nomotech.com"}},{"terms":{"email":"@voip.com"}}]]}}}}
+{"index":"test","size":20,"body":{"query":{"bool":{"must":[[{"terms":{"type":"site","email":"@test.com"}},{"terms":{"email":"@test2.com"}}]]}}}}

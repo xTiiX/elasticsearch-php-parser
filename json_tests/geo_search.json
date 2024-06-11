@@ -7,8 +7,8 @@
   },
   "query": {
     "geo": {
-      "longitude": -0.194995,
-      "latitude": 0.1124883,
+      "longitude": -0.19495,
+      "latitude": 0.11248,
       "maxDistanceKm": 20,
       "order": "asc"
     },

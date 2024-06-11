@@ -13,8 +13,8 @@
         "field": "email",
         "operator": "AND",
         "values": [
-          "@nomotech.com",
-          "@voip.com"
+          "@test.com",
+          "@test2.com"
         ]
       }
     ]
